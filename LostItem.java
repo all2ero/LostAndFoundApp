@@ -1,3 +1,4 @@
+#LostItem 클래스 생성 
 public class LostItem {
     private static int count = 1;
     private int id;
