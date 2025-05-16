@@ -1,3 +1,4 @@
+#분실물 정보 입력받기
 import java.util.Scanner;
 
 public class Main {
