@@ -60,3 +60,13 @@ class LostItem {
         return "[" + id + "] " + name + " / 위치: " + place + " / 날짜: " + date + " / 연락처: " + contact;
     }
 }
+
+class LostItemManager {
+    private ArrayList<LostItem> items = new ArrayList<>();
+
+    public void register(String name, String place, String date, String contact) {
+        LostItem newItem = new LostItem(name, place, date, contact);
+        items.add(newItem);
+        System.out.println("등록 완료: " + newItem);
+    }
+}
