@@ -9,7 +9,7 @@ public class Main {
         System.out.println(" 유실물 관리 프로그램 ");
 
         while (true) {
-            System.out.println("\n1. 등록하기 | 0. 종료");
+            System.out.println("\n1. 등록하기 | 2. 전체 목록 보기 | 0. 종료");
             System.out.print("번호를 선택하세요: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -28,6 +28,8 @@ public class Main {
                 String contact = scanner.nextLine();
 
                 manager.register(name, place, date, contact);
+            } else if (choice == 2) {
+                manager.showAll();
             } else if (choice == 0) {
                 System.out.println("프로그램을 종료합니다.");
                 break;
@@ -69,4 +71,15 @@ class LostItemManager {
         items.add(newItem);
         System.out.println("등록 완료: " + newItem);
     }
+    public void showAll() {
+        if (items.isEmpty()) {
+            System.out.println(" 등록된 분실물이 없습니다.");
+        } else {
+            System.out.println(" 전체 분실물 목록:");
+            for (LostItem item : items) {
+                System.out.println(item);
+            }
+        }
+    }
+
 }
