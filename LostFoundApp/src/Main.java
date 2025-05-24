@@ -9,7 +9,7 @@ public class Main {
         System.out.println(" 유실물 관리 프로그램 ");
 
         while (true) {
-            System.out.println("\n1. 등록하기 | 2. 전체 목록 보기 | 0. 종료");
+            System.out.println("\n1. 등록하기 | 2. 전체 목록 보기 | 3. 검색하기 | 0. 종료");
             System.out.print("번호를 선택하세요: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -33,6 +33,10 @@ public class Main {
             } else if (choice == 0) {
                 System.out.println("프로그램을 종료합니다.");
                 break;
+            } else if (choice == 3) {
+                System.out.print("검색할 키워드를 입력하세요: ");
+                String keyword = scanner.nextLine();
+                manager.search(keyword);
             } else {
                 System.out.println("잘못된 입력입니다.");
             }
@@ -71,6 +75,7 @@ class LostItemManager {
         items.add(newItem);
         System.out.println("등록 완료: " + newItem);
     }
+
     public void showAll() {
         if (items.isEmpty()) {
             System.out.println(" 등록된 분실물이 없습니다.");
@@ -82,4 +87,20 @@ class LostItemManager {
         }
     }
 
+    public void search(String keyword) {
+        boolean found = false;
+
+        System.out.println("검색 결과:");
+
+        for (LostItem item : items) {
+            if (item.toString().contains(keyword)) {
+                System.out.println(item);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println(" 해당 키워드를 포함한 분실물이 없습니다.");
+        }
+    }
 }
