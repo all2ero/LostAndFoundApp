@@ -9,7 +9,7 @@ public class Main {
         System.out.println(" 유실물 관리 프로그램 ");
 
         while (true) {
-            System.out.println("\n1. 등록하기 | 2. 전체 목록 보기 | 3. 검색하기 | 0. 종료");
+            System.out.println("\n1. 등록하기 | 2. 전체 목록 보기 | 3. 검색하기 | 4. 삭제하기 | 0. 종료");
             System.out.print("번호를 선택하세요: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -37,6 +37,12 @@ public class Main {
                 System.out.print("검색할 키워드를 입력하세요: ");
                 String keyword = scanner.nextLine();
                 manager.search(keyword);
+            } else if (choice == 4) {
+                System.out.print("삭제할 분실물의 ID를 입력하세요: ");
+                int deleteId = scanner.nextInt();
+                scanner.nextLine();
+                manager.deleteById(deleteId);
+
             } else {
                 System.out.println("잘못된 입력입니다.");
             }
@@ -101,6 +107,23 @@ class LostItemManager {
 
         if (!found) {
             System.out.println(" 해당 키워드를 포함한 분실물이 없습니다.");
+        }
+    }
+
+    public void deleteById(int id) {
+        boolean removed = false;
+
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).toString().contains("[" + id + "]")) {
+                System.out.println("삭제된 분실물: " + items.get(i));
+                items.remove(i);
+                removed = true;
+                break;
+            }
+        }
+
+        if (!removed) {
+            System.out.println("해당 ID의 분실물을 찾을 수 없습니다.");
         }
     }
 }
