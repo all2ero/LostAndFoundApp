@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,20 +29,25 @@ public class Main {
                 String contact = scanner.nextLine();
 
                 manager.register(name, place, date, contact);
+
             } else if (choice == 2) {
                 manager.showAll();
-            } else if (choice == 0) {
-                System.out.println("프로그램을 종료합니다.");
-                break;
+
             } else if (choice == 3) {
                 System.out.print("검색할 키워드를 입력하세요: ");
                 String keyword = scanner.nextLine();
                 manager.search(keyword);
+
             } else if (choice == 4) {
                 System.out.print("삭제할 분실물의 ID를 입력하세요: ");
                 int deleteId = scanner.nextInt();
                 scanner.nextLine();
                 manager.deleteById(deleteId);
+
+            } else if (choice == 0) {
+                manager.saveToFile("data/lost_items.txt");
+                System.out.println("프로그램을 종료합니다.");
+                break;
 
             } else {
                 System.out.println("잘못된 입력입니다.");
@@ -95,16 +101,13 @@ class LostItemManager {
 
     public void search(String keyword) {
         boolean found = false;
-
         System.out.println("검색 결과:");
-
         for (LostItem item : items) {
             if (item.toString().contains(keyword)) {
                 System.out.println(item);
                 found = true;
             }
         }
-
         if (!found) {
             System.out.println(" 해당 키워드를 포함한 분실물이 없습니다.");
         }
@@ -112,7 +115,6 @@ class LostItemManager {
 
     public void deleteById(int id) {
         boolean removed = false;
-
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).toString().contains("[" + id + "]")) {
                 System.out.println("삭제된 분실물: " + items.get(i));
@@ -126,4 +128,18 @@ class LostItemManager {
             System.out.println("해당 ID의 분실물을 찾을 수 없습니다.");
         }
     }
+
+    public void saveToFile(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (LostItem item : items) {
+                String line = item.toString();
+                writer.write(line);
+                writer.newLine();
+            }
+            System.out.println("분실물 목록이 저장되었습니다.");
+        } catch (IOException e) {
+            System.out.println("저장 실패: " + e.getMessage());
+        }
+    }
+
 }
