@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         LostItemManager manager = new LostItemManager();
         Scanner scanner = new Scanner(System.in);
+        manager.loadFromFile("data/lost_items.txt");
 
         System.out.println(" 유실물 관리 프로그램 ");
 
@@ -139,6 +140,27 @@ class LostItemManager {
             System.out.println("분실물 목록이 저장되었습니다.");
         } catch (IOException e) {
             System.out.println("저장 실패: " + e.getMessage());
+        }
+    }
+    public void loadFromFile(String filename) {
+        items.clear();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" / ");
+                if (parts.length == 4) {
+                    String name = parts[0].substring(parts[0].indexOf("]") + 2); // 물건명
+                    String place = parts[1].replace("위치: ", "");
+                    String date = parts[2].replace("날짜: ", "");
+                    String contact = parts[3].replace("연락처: ", "");
+                    items.add(new LostItem(name, place, date, contact));
+                }
+            }
+            System.out.println("분실물 목록을 불러왔습니다.");
+        } catch (FileNotFoundException e) {
+            System.out.println("저장된 파일이 없습니다. 새로 시작합니다.");
+        } catch (IOException e) {
+            System.out.println("불러오기 실패: " + e.getMessage());
         }
     }
 
