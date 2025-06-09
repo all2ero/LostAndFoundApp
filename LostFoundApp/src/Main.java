@@ -74,6 +74,9 @@ class LostItem {
         this.date = date;
         this.contact = contact;
     }
+    public int getId() {
+        return id;
+    }
 
     public String toString() {
         return "[" + id + "] " + name + " / 위치: " + place + " / 날짜: " + date + " / 연락처: " + contact;
@@ -130,6 +133,7 @@ class LostItemManager {
         }
     }
 
+
     public void saveToFile(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (LostItem item : items) {
@@ -141,6 +145,10 @@ class LostItemManager {
         } catch (IOException e) {
             System.out.println("저장 실패: " + e.getMessage());
         }
+    }
+
+    public ArrayList<LostItem> getItems() {
+        return items;
     }
     public void loadFromFile(String filename) {
         items.clear();
